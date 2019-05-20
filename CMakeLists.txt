@@ -3,10 +3,13 @@ project(interpolation_moskanova C)
 
 set(CMAKE_C_STANDARD 99)
 
-include_directories(interpolation_moskanova PUBLIC tests)
+include_directories(BEFORE headers)
+include_directories(BEFORE tests)
 
-add_library(interpolation_moskanova headers/interpolation.h interpolation.c)
+add_library(interpolation STATIC headers/interpolation.h interpolation.c)
 
 add_executable(test tests/test_interpolation.c)
 
-target_include_directories(test PUBLIC headers)
+#target_link_directories(test headers)
+target_link_libraries(test interpolation)
+target_include_directories(test BEFORE PUBLIC headers)
