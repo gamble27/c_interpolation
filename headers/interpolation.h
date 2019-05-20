@@ -28,7 +28,7 @@ typedef struct Input_Data Input_Data;
 
 //================ TASK FUNCTIONS SECTION ==============
 
-struct DVector Interpolate(const struct Input_Data* input);
+struct DVector Interpolate(const struct Input_Data *input);
 
 //================ INPUT SECTION ==============
 //void input_vector();
