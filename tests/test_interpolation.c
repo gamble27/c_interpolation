@@ -1,6 +1,15 @@
 //
 // Created by olga on 10.05.19.
 //
+// Olga Moskanova
+// statistics, 2 year
+//
+// olyushkam@gmail.com
+// https://github.com/gamble27
+//
+// this project can also be found here:
+// https://github.com/gamble27/c_interpolation
+//
 
 #include "interpolation.h"
 #include <stdio.h>
@@ -18,7 +27,6 @@ int main(){
     scanf("%c",&work_type);
     integer wrong_input_flag =    work_type == 'c'
                                 | work_type == 't';
-    //fixme twice printf
     while (wrong_input_flag==0) {
         printf("Please choose correct input type: \n");
         printf("c/t - console/text file \n");

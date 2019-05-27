@@ -1,6 +1,15 @@
 //
 // Created by olga on 23.04.19.
 //
+// Olga Moskanova
+// statistics, 2 year
+//
+// olyushkam@gmail.com
+// https://github.com/gamble27
+//
+// this project can also be found here:
+// https://github.com/gamble27/c_interpolation
+//
 
 //================= LIBRARIES SECTION ==================
 
@@ -54,7 +63,7 @@ struct DVector Interpolate(const struct Input_Data *inputData){
     // res.coordinates[0] - a
     // ....
     // res.coordinates[3] - d
-    // y = ax
+    // y = ax^3+bx^2+cx+d
 
     if (inputData->n <= 0) {
         printf("Your dataset is empty, just like your head, dude.\n");
@@ -64,6 +73,8 @@ struct DVector Interpolate(const struct Input_Data *inputData){
 
     struct DVector res = {4};
     res.coordinates = (floating_point *) calloc(res.dim, sizeof(floating_point));
+
+    // тут должен был быть код, но я не успела. закоммичу потом, если успею...
 
     return res;
 }

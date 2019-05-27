@@ -1,6 +1,15 @@
 //
 // Created by olga on 23.04.19.
 //
+// Olga Moskanova
+// statistics, 2 year
+//
+// olyushkam@gmail.com
+// https://github.com/gamble27
+//
+// this project can also be found here:
+// https://github.com/gamble27/c_interpolation
+//
 
 #ifndef INTERPOLATION_MOSKANOVA_INTERPOLATION_H
 #define INTERPOLATION_MOSKANOVA_INTERPOLATION_H
