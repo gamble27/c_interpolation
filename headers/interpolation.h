@@ -7,6 +7,8 @@
 
 #define integer int
 #define floating_point float
+#define character char
+#define file_t FILE*
 
 #include <lzma.h> // get size_t thing
 
@@ -22,18 +24,35 @@ typedef struct DVector DVector;
 
 struct Input_Data{
     int n; // length of arrays.
+    // x is height (cm)
+    // y is weight (kg)
     struct DVector *x, *y;
 };
 typedef struct Input_Data Input_Data;
 
 //================ TASK FUNCTIONS SECTION ==============
 
-struct DVector Interpolate(const struct Input_Data *input);
+// Calculates a,b and returns result as a DVector
+// .coordinates[0] = a
+// .coordinates[1] = b
+struct DVector Calculate(const struct Input_Data *inputData);
+
+// Interpolation for a non-linear (Cube) polynome
+// result is still a vector (dim = 4)
+// polynome(x) = (sum, i from 0 to 3) result[3-i]*x^i :]
+struct DVector Interpolate(const struct Input_Data *inputData);
 
 //================ INPUT SECTION ==============
-//void input_vector();
-//void finput_vector();
+
+integer input          (Input_Data *inputData);
+integer inputBinaryFile(char *file, Input_Data *inputData);
+integer inputTextFile  (char *file, Input_Data *inputData);
 
 //================ OUTPUT SECTION ==============
+
+// int ones for exit code
+void     output          (DVector *result);
+integer  outputBinaryFile();
+integer  outputTextFile  ();
 
 #endif //INTERPOLATION_MOSKANOVA_INTERPOLATION_H

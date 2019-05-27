@@ -10,6 +10,10 @@ add_library(interpolation STATIC headers/interpolation.h interpolation.c)
 
 add_executable(test tests/test_interpolation.c)
 
+add_executable(debug tests/test_debug.c)
+target_link_libraries(debug interpolation)
+target_include_directories(debug BEFORE PUBLIC headers)
+
 #target_link_directories(test headers)
 target_link_libraries(test interpolation)
 target_include_directories(test BEFORE PUBLIC headers)

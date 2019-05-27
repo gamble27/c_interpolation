@@ -7,31 +7,79 @@
 #include <malloc.h>
 
 int main(){
+    printf("Welcome to my Interpolation Project\n");
 
-    struct Input_Data inp;
-    inp.n = 2;
-    struct DVector x1, y1;
+//======================= INPUT TYPE =========================
 
-    x1.dim = 2;
-    x1.coordinates = calloc(x1.dim, sizeof(floating_point));
-    x1.coordinates[0] = 0;
-    x1.coordinates[1] = 1;
+    printf("Please choose input type: \n");
+    printf("c/t/b - console/binary file/text file \n");
 
-    y1.dim = 2;
-    y1.coordinates = calloc(y1.dim, sizeof(floating_point));
-    y1.coordinates[0] = 2;
-    y1.coordinates[1] = 3;
+    character work_type;
+    scanf("%c",&work_type);
+    integer wrong_input_flag =    work_type == 'c'
+                                | work_type == 't'
+                                | work_type == 'b';
+    //fixme twice printf
+    while (wrong_input_flag==0) {
+        printf("Please choose correct input type: \n");
+        printf("c/t/b - console/binary file/text file \n");
+        scanf("%c",&work_type);
+        wrong_input_flag = work_type == 'c'
+                           | work_type == 't'
+                           | work_type == 'b';
+    }
 
-    inp.x = &x1;
-    inp.y = &y1;
+//============= INPUT FUNCTIONS + CALCULATE CALL =============
 
-    struct DVector v1;
-    v1 = Interpolate(&inp);
-    printf("%zu", v1.dim);
+    struct DVector x,y;
+    struct Input_Data inputData = {0, &x, &y};
+    struct DVector ans_linear;
+//    struct DVector ans_cubic;
+    if        (work_type == 'c') {
+        if (!input(&inputData)) { // exit code == 0 => it's ok
+            ans_linear = Calculate  (&inputData);
+//            ans_cubic  = Interpolate(&inputData);
+        } else {
+            return 1;
+        }
+    } else if (work_type == 'b') {
+        printf("tododo");
 
-    free(x1.coordinates);
-    free(y1.coordinates);
-    free(v1.coordinates);
+    } else if (work_type == 't') {
+        printf("todododo");
+    }
+
+//===================== OUTPUT TYPE ======================
+
+    printf("Please choose output type: \n");
+    printf("c/t/b - console/binary file/text file \n");
+
+    scanf("%c",&work_type);
+    wrong_input_flag =    work_type == 'c'
+                                  | work_type == 't'
+                                  | work_type == 'b';
+    //fixme twice printf
+    while (wrong_input_flag==0) {
+        printf("Please choose correct output type: \n");
+        printf("c/t/b - console/binary file/text file \n");
+        scanf("%c",&work_type);
+        wrong_input_flag = work_type == 'c'
+                           | work_type == 't'
+                           | work_type == 'b';
+    }
+
+//===================== OUTPUT FUNCTIONS CALL ======================
+
+    if        (work_type == 'c') {
+        output(&ans_linear);
+//        output(&ans_cubic);
+    } else if (work_type == 'b') {
+        printf("tododo");
+    } else if (work_type == 't') {
+        printf("todododo");
+    }
+
+    printf("Thanks for your attention. \n (c) Olga Moskanova, #0 coder (or no)");
 
     return 0;
 }
