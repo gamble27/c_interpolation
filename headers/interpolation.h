@@ -45,7 +45,6 @@ struct DVector Interpolate(const struct Input_Data *inputData);
 //================ INPUT SECTION ==============
 
 integer input          (Input_Data *inputData);
-integer inputBinaryFile(char *file, Input_Data *inputData);
 integer inputTextFile  (char *file, Input_Data *inputData);
 
 // input text file structure

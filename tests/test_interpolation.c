@@ -12,21 +12,19 @@ int main(){
 //======================= INPUT TYPE =========================
 
     printf("Please choose input type: \n");
-    printf("c/t/b - console/binary file/text file \n");
+    printf("c/t - console/text file \n");
 
     character work_type;
     scanf("%c",&work_type);
     integer wrong_input_flag =    work_type == 'c'
-                                | work_type == 't'
-                                | work_type == 'b';
+                                | work_type == 't';
     //fixme twice printf
     while (wrong_input_flag==0) {
         printf("Please choose correct input type: \n");
-        printf("c/t/b - console/binary file/text file \n");
+        printf("c/t - console/text file \n");
         scanf("%c",&work_type);
         wrong_input_flag = work_type == 'c'
-                           | work_type == 't'
-                           | work_type == 'b';
+                           | work_type == 't';
     }
 
 //============= INPUT FUNCTIONS + CALCULATE CALL =============
@@ -44,9 +42,6 @@ int main(){
         } else {
             return 1;
         }
-    } else if (work_type == 'b') {
-        printf("tododo");
-
     } else if (work_type == 't') {
         printf("Please write a filename:\n");
         scanf("%s", filename);
@@ -64,13 +59,13 @@ int main(){
     printf("c/t/b - console/binary file/text file \n");
 
     scanf("%c",&work_type);
-    wrong_input_flag =    work_type == 'c'
-                                  | work_type == 't'
-                                  | work_type == 'b';
+    wrong_input_flag = work_type == 'c'
+                       | work_type == 't'
+                       | work_type == 'b';
     //fixme twice printf
     while (wrong_input_flag==0) {
         printf("Please choose correct output type: \n");
-        printf("c/t/b - console/binary file/text file \n");
+        printf("c/b/t - console/binary file/text file \n");
         scanf("%c",&work_type);
         wrong_input_flag = work_type == 'c'
                            | work_type == 't'
@@ -83,7 +78,10 @@ int main(){
         output(&ans_linear);
 //        output(&ans_cubic);
     } else if (work_type == 'b') {
-        printf("todododo");
+        printf("Please write a filename:\n");
+        scanf("%s", filename);
+        outputBinaryFile(filename, &ans_linear);
+//        outputBinaryFile(filename, &ans_cubic);
     } else if (work_type == 't') {
         printf("Please write a filename:\n");
         scanf("%s", filename);
@@ -99,7 +97,7 @@ int main(){
     free(ans_linear.coordinates);
 //    free(ans_cubic.coordinates);
 
-//    free(filename);
+    free(filename);
 
     return 0;
 }

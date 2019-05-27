@@ -5,7 +5,7 @@
 //================= LIBRARIES SECTION ==================
 
 #include <malloc.h>
-#include "headers/interpolation.h"
+#include "interpolation.h"
 
 //================ TASK FUNCTIONS SECTION ==============
 
@@ -106,18 +106,6 @@ integer input(Input_Data *inputData){
     return 0;
 }
 
-integer inputBinaryFile(char *file, Input_Data *inputData){
-    file_t inp_file = fopen(file, "rb");
-    if (inp_file == NULL) {
-        printf("error opening binary file\n");
-        return 1; // like exit status or stuff
-    }
-
-
-
-    return 0;
-}
-
 integer inputTextFile(char *file, Input_Data *inputData) {
     // input file structure
     // dim
@@ -187,7 +175,14 @@ void output(DVector *result) {
 }
 
 int outputBinaryFile(char *file, DVector *result){
-
+    file_t fout = fopen(file, "wb");
+    if (!file) {
+        printf("error opening binary file\n");
+        return 1;
+    }
+    fseek(fout, 0, SEEK_END);
+    fwrite(result, sizeof(floating_point), result->dim, fout);
+    fclose(fout);
 
     return 0;
 }
