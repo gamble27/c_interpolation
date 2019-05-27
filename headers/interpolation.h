@@ -48,11 +48,18 @@ integer input          (Input_Data *inputData);
 integer inputBinaryFile(char *file, Input_Data *inputData);
 integer inputTextFile  (char *file, Input_Data *inputData);
 
+// input text file structure
+// dim
+//
+// x1...xn separated by \n
+//
+// y1...yn separated by \n
+
 //================ OUTPUT SECTION ==============
 
 // int ones for exit code
 void     output          (DVector *result);
-integer  outputBinaryFile();
-integer  outputTextFile  ();
+integer  outputBinaryFile(char *file, DVector *result);
+integer  outputTextFile  (char *file, DVector *result);
 
 #endif //INTERPOLATION_MOSKANOVA_INTERPOLATION_H

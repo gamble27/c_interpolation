@@ -16,8 +16,9 @@ struct DVector Calculate(const struct Input_Data *inputData){
     // res.coordinates[1] - b
     // y = ax + b
     if (inputData->n <=0) {
-        // fixme: do something like program exiting
-        printf("Your dataset is empty, just like your head, dude.");
+        printf("Your dataset is empty, just like your head, dude.\n");
+        struct DVector erroneous = {0, NULL};
+        return erroneous;
     }
 
     struct DVector res = {2};
@@ -56,8 +57,9 @@ struct DVector Interpolate(const struct Input_Data *inputData){
     // y = ax
 
     if (inputData->n <= 0) {
-        // fixme: do something like program exiting
-        printf("Your dataset is empty, just like your head, dude.");
+        printf("Your dataset is empty, just like your head, dude.\n");
+        struct DVector erroneous = {0, NULL};
+        return erroneous;
     }
 
     struct DVector res = {4};
@@ -75,13 +77,13 @@ integer input(Input_Data *inputData){
     printf("y is weight (kg)\n");
     scanf("%i", &inputData->n);
     if (inputData->n <= 0) {
-        printf("dataset length must be greater than 0");
+        printf("dataset length must be greater than 0\n");
         return 1;
     }
     if (inputData->x == NULL
         | inputData->y == NULL) {
         printf("you have not provided any containers for dataset in your program");
-        printf("\nSegmentation fault");
+        printf("\nSegmentation fault\n");
         return 1;
     }
 
@@ -107,7 +109,7 @@ integer input(Input_Data *inputData){
 integer inputBinaryFile(char *file, Input_Data *inputData){
     file_t inp_file = fopen(file, "rb");
     if (inp_file == NULL) {
-        printf("error opening file");
+        printf("error opening binary file\n");
         return 1; // like exit status or stuff
     }
 
@@ -116,7 +118,57 @@ integer inputBinaryFile(char *file, Input_Data *inputData){
     return 0;
 }
 
-integer inputTextFile  (char *file, Input_Data *inputData){
+integer inputTextFile(char *file, Input_Data *inputData) {
+    // input file structure
+    // dim
+    //
+    // x1...xn separated by \n
+    //
+    // y1...yn separated by \n
+
+    file_t input_file = fopen(file, "r");
+    if (!input_file) {
+        printf("error opening text file");
+        return 1;
+    }
+    fseek(input_file, 0, SEEK_SET);
+    fscanf(input_file, "%i", &inputData->n);
+
+    if (inputData->n <= 0) {
+        printf("dataset length must be greater than 0\n");
+        return 1;
+    }
+    if (inputData->x == NULL
+        | inputData->y == NULL) {
+        printf("you have not provided any containers for dataset in your program");
+        printf("\nSegmentation fault\n");
+        return 1;
+    }
+
+    inputData->x->dim = inputData->n;
+    inputData->y->dim = inputData->n;
+    inputData->x->coordinates =
+            (floating_point *)
+                    calloc(inputData->x->dim, sizeof(floating_point));
+    inputData->y->coordinates =
+            (floating_point *)
+                    calloc(inputData->y->dim, sizeof(floating_point));
+
+    fseek(input_file, 1, SEEK_CUR);
+
+    for (int i = 0; i < inputData->n; ++i) {
+        fseek(input_file, 1, SEEK_CUR);
+        fscanf(input_file, "%f", &inputData->x->coordinates[i]);
+    }
+
+    fseek(input_file, 1, SEEK_CUR);
+
+    for (int i = 0; i < inputData->n; ++i) {
+        fseek(input_file, 1, SEEK_CUR);
+        fscanf(input_file, "%f", &inputData->y->coordinates[i]);
+    }
+
+    fclose(input_file);
 
     return 0;
 }
@@ -132,4 +184,33 @@ void output(DVector *result) {
     }
     printf("%.2fx+", result->coordinates[result->dim - 2]);
     printf("%.2f\n", result->coordinates[result->dim - 1]);
+}
+
+int outputBinaryFile(char *file, DVector *result){
+
+
+    return 0;
+}
+
+int outputTextFile(char *file, DVector *result){
+    file_t fout = fopen(file, "a");
+    if (!fout) {
+        printf("error opening text file\n");
+        return 1;
+    }
+
+    fseek(fout, 0, SEEK_END);
+
+    fprintf(fout, "y=");
+    for (integer i = 0; i < result->dim - 2; ++i) {
+        fprintf(fout, "%.2fx^%i+",
+               result->coordinates[i],
+               (integer) result->dim - i - 1);
+    }
+    fprintf(fout, "%.2fx+", result->coordinates[result->dim - 2]);
+    fprintf(fout, "%.2f\n", result->coordinates[result->dim - 1]);
+
+    fclose(fout);
+
+    return 0;
 }

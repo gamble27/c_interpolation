@@ -35,6 +35,8 @@ int main(){
     struct Input_Data inputData = {0, &x, &y};
     struct DVector ans_linear;
 //    struct DVector ans_cubic;
+    character *filename = (character *) malloc(100 * sizeof(character));
+
     if        (work_type == 'c') {
         if (!input(&inputData)) { // exit code == 0 => it's ok
             ans_linear = Calculate  (&inputData);
@@ -46,7 +48,14 @@ int main(){
         printf("tododo");
 
     } else if (work_type == 't') {
-        printf("todododo");
+        printf("Please write a filename:\n");
+        scanf("%s", filename);
+        if (!inputTextFile(filename, &inputData)) { // exit code == 0 => it's ok
+            ans_linear = Calculate  (&inputData);
+//            ans_cubic  = Interpolate(&inputData);
+        } else {
+            return 1;
+        }
     }
 
 //===================== OUTPUT TYPE ======================
@@ -74,12 +83,23 @@ int main(){
         output(&ans_linear);
 //        output(&ans_cubic);
     } else if (work_type == 'b') {
-        printf("tododo");
-    } else if (work_type == 't') {
         printf("todododo");
+    } else if (work_type == 't') {
+        printf("Please write a filename:\n");
+        scanf("%s", filename);
+        outputTextFile(filename, &ans_linear);
+//        outputTextFile(filename, *ans_cubic);
     }
 
     printf("Thanks for your attention. \n (c) Olga Moskanova, #0 coder (or no)");
+
+    free(inputData.x->coordinates);
+    free(inputData.y->coordinates);
+
+    free(ans_linear.coordinates);
+//    free(ans_cubic.coordinates);
+
+//    free(filename);
 
     return 0;
 }
