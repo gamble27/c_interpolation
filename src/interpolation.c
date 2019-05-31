@@ -71,10 +71,86 @@ struct DVector Interpolate(const struct Input_Data *inputData){
         return erroneous;
     }
 
-    struct DVector res = {4};
+    floating_point **matrix = (floating_point **) malloc(sizeof(floating_point) * 16);
+    for (int i = 0; i < 4; ++i) {
+        matrix[i] = (floating_point *) malloc(sizeof(floating_point) * 4);
+    }// matrix for finding a..d,
+    // left side of linear system
+    floating_point *vector = (floating_point *) malloc(sizeof(floating_point) * 4);
+    for (integer i = 0; i < 4; ++i) {
+        vector[0] = 0;
+    }// vector-column in linear heterogeneous system,
+    // right side of linear system
+    floating_point *sum_xn = (floating_point *) calloc(6, sizeof(floating_point));
+    for (integer i = 0; i < 6; ++i) {
+        sum_xn[i] = 0;
+    }// sum of x^i from dataset, sum_xn[i] = sum of x^(i+1),
+    // components of matrix on the left side of the linear system
+
+    for (integer i = 0; i < inputData->n; ++i) {
+        for (integer j = 0; j < 6; ++j) {
+            sum_xn[j] += pow(inputData->x->coordinates[i], j + 1);
+        }
+
+        for (integer j = 0; j < 4; ++j) {
+            vector[j] += inputData->y->coordinates[i] *
+                         pow(inputData->x->coordinates[i], 3 - j);
+        }
+    }
+
+    // define matrix for system
+    // I really don't know how to that better
+    matrix[0][0] = sum_xn[5];
+
+    matrix[1][0] = sum_xn[4];
+    matrix[0][1] = sum_xn[4];
+
+    matrix[2][0] = sum_xn[3];
+    matrix[1][1] = sum_xn[3];
+    matrix[0][2] = sum_xn[3];
+
+    matrix[3][0] = sum_xn[2];
+    matrix[2][1] = sum_xn[2];
+    matrix[1][2] = sum_xn[2];
+    matrix[0][3] = sum_xn[2];
+
+    matrix[3][1] = sum_xn[1];
+    matrix[2][2] = sum_xn[1];
+    matrix[1][3] = sum_xn[1];
+
+    matrix[3][2] = sum_xn[0];
+    matrix[2][3] = sum_xn[0];
+
+    matrix[3][3] = inputData->n;
+
+    // solve the system and get coefficients a..d
+    struct DVector res = SolveLinSystem(matrix, vector, 4);
+
+    free(vector);
+    for (integer i = 0; i < 4; ++i) {
+        free(matrix[i]);
+    }
+    free(matrix);
+
+    return res;
+}
+
+floating_point pow(floating_point x, integer n){
+    floating_point res = 1;
+    for (int i = 0; i < n; ++i) {
+        res *= x;
+    }
+
+    return res;
+}
+
+struct DVector SolveLinSystem(floating_point** matrix,
+                              floating_point *vector,
+                              integer n){
+    struct DVector res = {n};
     res.coordinates = (floating_point *) calloc(res.dim, sizeof(floating_point));
 
-    // тут должен был быть код, но я не успела. закоммичу потом, если успею...
+    ////////// todo: write linear system solution function
 
     return res;
 }

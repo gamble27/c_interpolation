@@ -15,7 +15,7 @@
 #define INTERPOLATION_MOSKANOVA_INTERPOLATION_H
 
 #define integer int
-#define floating_point float
+#define floating_point double
 #define character char
 #define file_t FILE*
 
@@ -50,6 +50,13 @@ struct DVector Calculate(const struct Input_Data *inputData);
 // result is still a vector (dim = 4)
 // polynome(x) = (sum, i from 0 to 3) result[3-i]*x^i :]
 struct DVector Interpolate(const struct Input_Data *inputData);
+
+// in Interpolate function we need to solve linear system,
+// so here are some functions for find roots using Gausssian method
+floating_point pow(floating_point x, integer n);
+struct DVector SolveLinSystem(floating_point** matrix,
+        floating_point *vector, integer n);
+///
 
 //================ INPUT SECTION ==============
 
