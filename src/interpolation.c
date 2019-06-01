@@ -79,7 +79,7 @@ struct DVector Interpolate(const struct Input_Data *inputData){
     floating_point *vector = (floating_point *) malloc(sizeof(floating_point) * 4);
     for (integer i = 0; i < 4; ++i) {
         vector[0] = 0;
-    }// vector-column in linear heterogeneous system,
+    }// vector-column in augmented matrix,
     // right side of linear system
     floating_point *sum_xn = (floating_point *) calloc(6, sizeof(floating_point));
     for (integer i = 0; i < 6; ++i) {

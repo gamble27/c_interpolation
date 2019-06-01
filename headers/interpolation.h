@@ -59,7 +59,7 @@ void Jacobi(integer n, floating_point **matrix,
             floating_point *f, floating_point *result);
 struct DVector SolveLinSystem(floating_point** matrix,
         floating_point *vector, integer n); // this can only solve
-        // square heterogeneous linear system
+        // square linear system; augmented matrix
         // it's like do-not-touch-my-rubbish meme
         // it's like legacy
         // SO DO NOT TOUCH THIS!
