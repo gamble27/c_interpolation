@@ -52,10 +52,17 @@ struct DVector Calculate(const struct Input_Data *inputData);
 struct DVector Interpolate(const struct Input_Data *inputData);
 
 // in Interpolate function we need to solve linear system,
-// so here are some functions for find roots using Gausssian method
-floating_point pow(floating_point x, integer n);
+// so here are some functions for find roots using Jacobi method
+floating_point power(floating_point x, integer n);
+floating_point fabs(floating_point x); // abs for float :]
+void Jacobi(integer n, floating_point **matrix,
+            floating_point *f, floating_point *result);
 struct DVector SolveLinSystem(floating_point** matrix,
-        floating_point *vector, integer n);
+        floating_point *vector, integer n); // this can only solve
+        // square heterogeneous linear system
+        // it's like do-not-touch-my-rubbish meme
+        // it's like legacy
+        // SO DO NOT TOUCH THIS!
 ///
 
 //================ INPUT SECTION ==============
